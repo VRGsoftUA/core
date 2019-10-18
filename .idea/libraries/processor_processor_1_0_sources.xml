@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="processor.processor-1.0-sources">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/processor/build/libs/processor-1.0-sources.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,28 @@
+allprojects {
+	version = "1.0"
+}
+
+buildscript {
+	apply from: "${rootDir}/config/versions.gradle"
+
+	repositories {
+		google()
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.android.tools.build:gradle:3.4.2'
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+	}
+}
+
+subprojects {
+	apply plugin: 'maven'
+
+	apply from: "${project.rootDir}/config/versions.gradle"
+
+	repositories {
+		google()
+		jcenter()
+	}
+}
+
