@@ -17,7 +17,7 @@ abstract class BindingActivity<B : ViewDataBinding> : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.inflate(LayoutInflater.from(this), getLayoutRes(), null, false)
-        binding.lifecycleOwner = this
+        binding.setLifecycleOwner(this)
 
         lifecycle.addObserver(viewModel)
 

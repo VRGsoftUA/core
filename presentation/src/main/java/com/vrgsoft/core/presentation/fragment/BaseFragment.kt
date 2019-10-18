@@ -65,7 +65,7 @@ abstract class BaseFragment<B : ViewDataBinding> : Fragment(), KodeinAware {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            lifecycleOwner = this@BaseFragment
+            setLifecycleOwner(this@BaseFragment)
         }
 
         viewCreated(savedInstanceState)

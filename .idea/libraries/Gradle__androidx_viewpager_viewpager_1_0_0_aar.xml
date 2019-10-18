@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.viewpager:viewpager:1.0.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/36833d69b9041f24ed4f2f8b52008ede/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/36833d69b9041f24ed4f2f8b52008ede/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewpager-1.0.0.aar/f6231dd1a25bf26d1d4dac138e41a06c/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewpager-1.0.0.aar/f6231dd1a25bf26d1d4dac138e41a06c/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
