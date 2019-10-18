@@ -9,12 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/annotations" />
-            <option value="$PROJECT_DIR$/gateway" />
-            <option value="$PROJECT_DIR$/networkmanager" />
-            <option value="$PROJECT_DIR$/presentation" />
             <option value="$PROJECT_DIR$/processor" />
-            <option value="$PROJECT_DIR$/remote" />
-            <option value="$PROJECT_DIR$/retrofit" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

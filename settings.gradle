@@ -1,7 +1,2 @@
-include 'retrofit'
-include 'remote'
-include 'networkmanager'
-include 'gateway'
-include 'presentation'
 include 'annotations'
 include 'processor'

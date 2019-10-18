@@ -26,8 +26,6 @@ dependencies {
 }
 
 jar {
-  destinationDir = new File("$project.buildDir/outputs/jar/")
-
   from {
     configurations.compile.collect {
       it.isDirectory() ? it : zipTree(it) }
@@ -39,3 +37,18 @@ jar {
 
 sourceCompatibility = "8"
 targetCompatibility = "8"
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+  classifier = 'sources'
+  from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  classifier = 'javadoc'
+  from javadoc.destinationDir
+}
+
+artifacts {
+  archives sourcesJar
+  archives javadocJar
+}
