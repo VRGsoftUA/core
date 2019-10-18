@@ -34,6 +34,14 @@ android {
         jvmTarget = "1.8"
     }
 
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (outputFile != null && outputFileName.endsWith('.aar')) {
+                outputFileName = "retrofit.aar"
+            }
+        }
+    }
+
 }
 
 dependencies {
