@@ -19,20 +19,10 @@ compileTestKotlin {
 dependencies {
   compile project(':annotations')
 
-  compile 'com.squareup:kotlinpoet:1.0.1'
+  implementation 'com.squareup:kotlinpoet:1.0.1'
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
   implementation "com.google.auto.service:auto-service:1.0-rc4"
   kapt "com.google.auto.service:auto-service:1.0-rc4"
-}
-
-jar {
-  from {
-    configurations.compile.collect {
-      it.isDirectory() ? it : zipTree(it) }
-  }
-
-  exclude 'kotlin/**'
-  exclude 'META-INF/*.kotlin_module'
 }
 
 sourceCompatibility = "8"
