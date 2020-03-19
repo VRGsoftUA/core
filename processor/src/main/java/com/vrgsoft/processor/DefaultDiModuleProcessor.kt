@@ -86,7 +86,7 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
                             )
                             .addCode("{\n")
                             .addCode(
-                                "bind<ViewModelProvider.Factory>(tag = \"%L\") with singleton { %LFactory(%L) }\n",
+                                "bind<ViewModelProvider.Factory>(tag = \"%L\") with provider { %LFactory(%L) }\n",
                                 baseName,
                                 viewModelName,
                                 params
