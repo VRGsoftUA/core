@@ -84,7 +84,6 @@ abstract class BaseVMDiModuleProcessor(
             .addImport("org.kodein.di.generic", "provider")
             .addImport("org.kodein.di.generic", "instance")
             .addImport("androidx.lifecycle", "ViewModelProvider")
-            .addProviderImports(element)
             .addType(
                 moduleTypeBuilder
                     .addFunction(
@@ -110,7 +109,6 @@ abstract class BaseVMDiModuleProcessor(
                                 viewModelName,
                                 baseName
                             )
-                            .addProvideBloc(element, baseName.toString())
                             .addCode("}\n")
                             .build()
                     )
@@ -118,17 +116,6 @@ abstract class BaseVMDiModuleProcessor(
             )
             .build()
             .writeTo(file)
-    }
-
-    open fun FunSpec.Builder.addProvideBloc(
-        element: TypeElement,
-        baseName: String
-    ): FunSpec.Builder {
-        return this
-    }
-
-    open fun FileSpec.Builder.addProviderImports(element: TypeElement): FileSpec.Builder {
-        return this
     }
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {

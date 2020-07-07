@@ -97,6 +97,20 @@ class RouterDiModuleFactory() : AbstractProcessor() {
                             .addCode("}\n")
                             .build()
                     )
+                    .addFunction(
+                        FunSpec.builder("getAsActivityRouter")
+                            .addCode(
+                                "return Kodein.Module(\"%L\")",
+                                baseName
+                            )
+                            .addCode("{\n")
+                            .addCode(
+                                "bind<ActivityRouter>() with provider { instance<%L>() }\n",
+                                routerName
+                            )
+                            .addCode("}\n")
+                            .build()
+                    )
                     .build()
             )
             .build()
