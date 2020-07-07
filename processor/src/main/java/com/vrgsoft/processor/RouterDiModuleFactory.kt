@@ -1,7 +1,6 @@
 package com.vrgsoft.processor
 
 import com.google.auto.service.AutoService
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeSpec
@@ -80,6 +79,7 @@ class RouterDiModuleFactory() : AbstractProcessor() {
             .addImport("org.kodein.di.generic", "singleton")
             .addImport("org.kodein.di.generic", "provider")
             .addImport("org.kodein.di.generic", "instance")
+            .addImport("com.vrgsoft.core.presentation.router", "ActivityRouter")
             .addType(
                 moduleTypeBuilder
                     .addFunction(
