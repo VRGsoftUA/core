@@ -101,7 +101,7 @@ abstract class BaseVMDiModuleProcessor(
                                 params
                             )
                             .addCode(
-                                "bind<%L.ViewModel>() with provider { fragment.vm<%L>(instance(tag = \"%L\")) }\n",
+                                "bind<%L.ViewModel>() with provider { ${targetParameterName}.vm<%L>(instance(tag = \"%L\")) }\n",
                                 contractName,
                                 viewModelName,
                                 baseName
