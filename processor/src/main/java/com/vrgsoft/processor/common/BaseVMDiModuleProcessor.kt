@@ -1,27 +1,29 @@
-package com.vrgsoft.processor
+package com.vrgsoft.processor.common
 
-import com.google.auto.service.AutoService
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.TypeSpec
-import com.vrgsoft.annotations.ViewModelDiModule
 import com.vrgsoft.processor.KAPT_KOTLIN_GENERATED_OPTION_NAME
 import com.vrgsoft.processor.errormessage
 import java.io.File
-import javax.annotation.processing.*
-import javax.lang.model.SourceVersion
+import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.ExecutableElement
 import javax.lang.model.element.TypeElement
 
-@AutoService(Processor::class)
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
-@SupportedOptions(KAPT_KOTLIN_GENERATED_OPTION_NAME)
-class DefaultDiModuleProcessor : AbstractProcessor() {
+abstract class BaseVMDiModuleProcessor(
+    private val annotationClass: Class<out Annotation>,
+    private val target: String,
+    private val targetParameterName: String
+) : AbstractProcessor() {
 
-    override fun process(annotations: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
-        roundEnv.getElementsAnnotatedWith(ViewModelDiModule::class.java).forEach { element ->
+    override fun process(
+        annotations: MutableSet<out TypeElement>,
+        roundEnv: RoundEnvironment
+    ): Boolean {
+        roundEnv.getElementsAnnotatedWith(annotationClass).forEach { element ->
             if (element.kind != ElementKind.CLASS) {
                 processingEnv.messager.errormessage { "Can only be applied to classes,  element: $element " }
                 return false
@@ -29,14 +31,18 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
 
             val typeElement = element as TypeElement
 
-            generateNewMethod(typeElement, processingEnv.elementUtils.getPackageOf(element).toString())
+            generateNewMethod(
+                typeElement,
+                processingEnv.elementUtils.getPackageOf(element).toString()
+            )
         }
 
         return false
     }
 
     private fun generateNewMethod(element: TypeElement, packageOfMethod: String) {
-        val generatedSourcesRoot: String = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME].orEmpty()
+        val generatedSourcesRoot: String =
+            processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME].orEmpty()
         if (generatedSourcesRoot.isEmpty()) {
             processingEnv.messager.errormessage { "Can't find the target directory for generated Kotlin files." }
             return
@@ -44,7 +50,7 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
 
         val viewModelName = element.simpleName
         val baseName = viewModelName.removeSuffix("ViewModel")
-        val fragmentName = "${baseName}Fragment"
+        val targetName = "${baseName}$target"
         val fileName = "${viewModelName}Module"
         val contractName = "${baseName}Contract"
 
@@ -54,8 +60,8 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
 
         element.enclosedElements.forEach {
             if (it.kind == ElementKind.CONSTRUCTOR) {
-                val constructr = it as ExecutableElement
-                constructr.parameters.forEach { _ ->
+                val constructor = it as ExecutableElement
+                constructor.parameters.forEach { _ ->
                     params += "instance(), "
                 }
             }
@@ -79,7 +85,10 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
                 moduleTypeBuilder
                     .addFunction(
                         FunSpec.builder("get")
-                            .addParameter("fragment", ClassName(packageOfMethod, fragmentName))
+                            .addParameter(
+                                targetParameterName,
+                                ClassName(packageOfMethod, targetName)
+                            )
                             .addCode(
                                 "return Kodein.Module(\"%L\")",
                                 baseName
@@ -107,6 +116,6 @@ class DefaultDiModuleProcessor : AbstractProcessor() {
     }
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
-        return mutableSetOf(ViewModelDiModule::class.java.canonicalName)
+        return mutableSetOf(annotationClass.canonicalName)
     }
 }

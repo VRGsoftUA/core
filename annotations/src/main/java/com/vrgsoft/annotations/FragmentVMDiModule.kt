@@ -2,4 +2,4 @@ package com.vrgsoft.annotations
 
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS)
-annotation class ViewModelDiModule
+annotation class FragmentVMDiModule
