@@ -32,15 +32,18 @@ abstract class BaseVMDiModuleProcessor(
             val typeElement = element as TypeElement
 
             generateNewMethod(
-                typeElement,
-                processingEnv.elementUtils.getPackageOf(element).toString()
+                element = typeElement,
+                packageOfMethod = processingEnv.elementUtils.getPackageOf(element).toString()
             )
         }
 
         return false
     }
 
-    private fun generateNewMethod(element: TypeElement, packageOfMethod: String) {
+    private fun generateNewMethod(
+        element: TypeElement,
+        packageOfMethod: String
+    ) {
         val generatedSourcesRoot: String =
             processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME].orEmpty()
         if (generatedSourcesRoot.isEmpty()) {
@@ -81,6 +84,7 @@ abstract class BaseVMDiModuleProcessor(
             .addImport("org.kodein.di.generic", "provider")
             .addImport("org.kodein.di.generic", "instance")
             .addImport("androidx.lifecycle", "ViewModelProvider")
+            .addProviderImports(element)
             .addType(
                 moduleTypeBuilder
                     .addFunction(
@@ -106,6 +110,7 @@ abstract class BaseVMDiModuleProcessor(
                                 viewModelName,
                                 baseName
                             )
+                            .addProvideBloc(element, baseName.toString())
                             .addCode("}\n")
                             .build()
                     )
@@ -113,6 +118,17 @@ abstract class BaseVMDiModuleProcessor(
             )
             .build()
             .writeTo(file)
+    }
+
+    open fun FunSpec.Builder.addProvideBloc(
+        element: TypeElement,
+        baseName: String
+    ): FunSpec.Builder {
+        return this
+    }
+
+    open fun FileSpec.Builder.addProviderImports(element: TypeElement): FileSpec.Builder {
+        return this
     }
 
     override fun getSupportedAnnotationTypes(): MutableSet<String> {
