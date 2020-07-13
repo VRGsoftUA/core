@@ -1,0 +1,3 @@
+com.vrgsoft.processor.RouterDiModuleFactory,isolating
+com.vrgsoft.processor.ActivityVMDiModuleProcessor,isolating
+com.vrgsoft.processor.FragmentVMDiModuleProcessor,isolating
