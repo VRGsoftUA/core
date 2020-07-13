@@ -94,7 +94,7 @@ abstract class BaseVMDiModuleProcessor(
                             )
                             .addCode(
                                 "return Kodein.Module(\"%L\")",
-                                baseName
+                                "$baseName.VmModule"
                             )
                             .addCode("{\n")
                             .addCode(

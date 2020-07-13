@@ -86,7 +86,7 @@ class RouterDiModuleFactory() : AbstractProcessor() {
                         FunSpec.builder("get")
                             .addCode(
                                 "return Kodein.Module(\"%L\")",
-                                baseName
+                                "$baseName.RouterModule"
                             )
                             .addCode("{\n")
                             .addCode(
@@ -101,7 +101,7 @@ class RouterDiModuleFactory() : AbstractProcessor() {
                         FunSpec.builder("getAsActivityRouter")
                             .addCode(
                                 "return Kodein.Module(\"%L\")",
-                                baseName
+                                "$baseName.ActivityRouterModule"
                             )
                             .addCode("{\n")
                             .addCode(
